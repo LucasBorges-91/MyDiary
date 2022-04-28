@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_new_memory_page.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_all_memories.xml" value="0.3359375" />
       </map>
     </option>
   </component>
