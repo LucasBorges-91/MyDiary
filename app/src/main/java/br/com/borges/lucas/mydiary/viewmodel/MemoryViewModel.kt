@@ -14,7 +14,7 @@ class MemoryViewModel : ViewModel() {
   private var mSaveMemory = MutableLiveData<Boolean>()
   val saveMemory: LiveData<Boolean> = mSaveMemory
 
-  fun save( title: String, memory: String, date: Date) {
+  fun save( title: String, memory: String, date: String) {
     val memory = MemoryModel( title, memory, date)
     mMemoryRepository.save( memory )
   }

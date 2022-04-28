@@ -31,13 +31,14 @@ class NewMemoryActivity : AppCompatActivity() {
 
   private fun setListeners() {
     val date = Date()
-    binding.tvDate.text = sdf.format(date)
+    val dateFormat: String = sdf.format(date)
+    binding.tvDate.text = dateFormat
 
     binding.btSave.setOnClickListener {
       val title = binding.etMemoryTitle.text.toString()
       val memory = binding.etTextMemory.text.toString()
 
-      mViewModel.save( title, memory, date )
+      mViewModel.save( title, memory, dateFormat )
     }
   }
 
