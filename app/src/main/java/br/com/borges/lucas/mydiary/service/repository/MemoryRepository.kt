@@ -23,7 +23,43 @@ class MemoryRepository private constructor( context: Context ) {
 
   fun getAll(): List<MemoryModel> {
     val list: MutableList<MemoryModel> = ArrayList()
-    return list
+
+    return try {
+      val db = mMemoryDataBaseHelper.readableDatabase
+
+      val projection = arrayOf(
+        DataBaseConstants.MEMORY.COLUMNS.ID,
+        DataBaseConstants.MEMORY.COLUMNS.TITLE,
+        DataBaseConstants.MEMORY.COLUMNS.MEMORY,
+        DataBaseConstants.MEMORY.COLUMNS.DATE
+      )
+
+      val cursor = db.query(
+        DataBaseConstants.MEMORY.TABLE_NAME,
+        projection,
+        null,
+        null,
+        null,
+        null,
+        null
+      )
+
+      if ( cursor != null && cursor.count > 0 ) {
+        while ( cursor.moveToNext() ) {
+          val id = cursor.getInt( cursor.getColumnIndex( DataBaseConstants.MEMORY.COLUMNS.ID ) )
+          val title = cursor.getString( cursor.getColumnIndex( DataBaseConstants.MEMORY.COLUMNS.TITLE ) )
+          val memoryText = cursor.getString( cursor.getColumnIndex( DataBaseConstants.MEMORY.COLUMNS.MEMORY ) )
+          val date = cursor.getString( cursor.getColumnIndex( DataBaseConstants.MEMORY.COLUMNS.DATE ) )
+
+          val memory = MemoryModel( id, title, memoryText, date )
+          list.add( memory )
+        }
+      }
+      cursor?.close()
+      list
+    } catch ( e: Exception ) {
+      list
+    }
   }
 
   fun get( id: Int ): MemoryModel? {
