@@ -1,5 +1,6 @@
 package br.com.borges.lucas.mydiary.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +40,12 @@ class NewMemoryActivity : AppCompatActivity() {
       val memory = binding.etTextMemory.text.toString()
 
       mViewModel.save( title, memory, dateFormat )
+    }
+
+    binding.btReturn.setOnClickListener {
+      val intent = Intent( applicationContext, AllMemoriesActivity::class.java )
+      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+      startActivity(intent)
     }
   }
 
