@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
     setContentView(binding.root)
 
 
-    val navController = findNavController( R.id )
     setListeners()
   }
 

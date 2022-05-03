@@ -26,6 +26,45 @@ class MemoryRepository private constructor( context: Context ) {
     return list
   }
 
+  fun get( id: Int ): MemoryModel? {
+    var memory: MemoryModel? = null
+
+    return try {
+      val db = mMemoryDataBaseHelper.readableDatabase
+
+      val projection = arrayOf( DataBaseConstants.MEMORY.COLUMNS.TITLE,
+        DataBaseConstants.MEMORY.COLUMNS.MEMORY,
+        DataBaseConstants.MEMORY.COLUMNS.DATE )
+
+      val selection = DataBaseConstants.MEMORY.COLUMNS.ID + " = ?"
+      val args = arrayOf( id.toString() )
+
+      val cursor = db.query(
+        DataBaseConstants.MEMORY.TABLE_NAME,
+        projection,
+        selection,
+        args,
+        null,
+        null,
+        null
+      )
+
+      if ( cursor != null && cursor.count > 0 ) {
+        cursor.moveToFirst()
+
+        val title = cursor.getString( cursor.getColumnIndex( DataBaseConstants.MEMORY.COLUMNS.TITLE ) )
+        val memoryText = cursor.getString( cursor.getColumnIndex( DataBaseConstants.MEMORY.COLUMNS.MEMORY ) )
+        val date = cursor.getString( cursor.getColumnIndex( DataBaseConstants.MEMORY.COLUMNS.DATE ) )
+
+        memory = MemoryModel( id, title, memoryText, date )
+      }
+      cursor?.close()
+      memory
+    } catch ( e: Exception ) {
+      memory
+    }
+  }
+
   fun save( memory: MemoryModel ) : Boolean {
     return try {
       val db = mMemoryDataBaseHelper.writableDatabase
