@@ -56,6 +56,7 @@ class NewMemoryActivity : AppCompatActivity() {
       } else {
         Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
       }
+      finish()
     })
   }
 

@@ -18,5 +18,6 @@ class MemoryViewModel( application: Application ) : AndroidViewModel( applicatio
   fun save( title: String, memory: String, date: String ) {
     val memory = MemoryModel( title = title, textMemory = memory, date = date )
     mMemoryRepository.save( memory )
+    mSaveMemory.value = mMemoryRepository.save( memory )
   }
 }
