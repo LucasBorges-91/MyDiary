@@ -17,6 +17,7 @@ class NewMemoryActivity : AppCompatActivity() {
 
   private lateinit var binding: ActivityNewMemoryBinding
   private lateinit var mViewModel: MemoryViewModel
+  private var mMemoriId: Int = 0
 
   private val sdf = SimpleDateFormat("dd/MM/yyyy")
 
@@ -26,17 +27,16 @@ class NewMemoryActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     mViewModel = ViewModelProvider(this).get(MemoryViewModel::class.java)
-
-    loadData()
     setListeners()
     observe()
+    loadData()
   }
 
   private fun loadData() {
     val bundle = intent.extras
     if ( bundle != null ) {
-      val id = bundle.getInt( MemoryConstants.MEMORYID )
-      mViewModel.load(id)
+      mMemoriId = bundle.getInt( MemoryConstants.MEMORYID )
+      mViewModel.load(mMemoriId)
     }
   }
 
@@ -49,7 +49,7 @@ class NewMemoryActivity : AppCompatActivity() {
       val title = binding.etMemoryTitle.text.toString()
       val memory = binding.etTextMemory.text.toString()
 
-      mViewModel.save( title, memory, dateFormat )
+      mViewModel.save( mMemoriId, title, memory, dateFormat )
     }
 
     binding.btReturn.setOnClickListener {
