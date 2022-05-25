@@ -30,7 +30,7 @@ class AllMemoriesActivity : AppCompatActivity() {
     recycler.adapter = mAdapter
 
     observer()
-    allMemoriesViewModel.load()
+
     setListeners()
   }
 
@@ -49,5 +49,10 @@ class AllMemoriesActivity : AppCompatActivity() {
     allMemoriesViewModel.memoryList.observe( this, Observer {
       mAdapter.updateMemories(it)
     })
+  }
+
+  override fun onResume() {
+    super.onResume()
+    allMemoriesViewModel.load()
   }
 }
