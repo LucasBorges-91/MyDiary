@@ -43,6 +43,11 @@ class AllMemoriesActivity : AppCompatActivity() {
         startActivity(intent)
       }
 
+      override fun onDelete(id: Int) {
+        allMemoriesViewModel.delete(id)
+        allMemoriesViewModel.load()
+      }
+
     }
 
     mAdapter.attachListener(mListener)

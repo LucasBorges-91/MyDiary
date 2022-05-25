@@ -18,4 +18,8 @@ class AllMemoriesViewModel( application: Application ) : AndroidViewModel( appli
   fun load() {
     mMemoryList.value = mMemoriesRepository.getAll()
   }
+
+  fun delete(id: Int) {
+    mMemoriesRepository.delete( id )
+  }
 }

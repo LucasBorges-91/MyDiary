@@ -1,5 +1,6 @@
 package br.com.borges.lucas.mydiary.view.viewholder
 
+import android.app.AlertDialog
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,18 @@ class MemoryViewHolder( itemView : View, val listener: MemoryListener ) : Recycl
 
     textTitle.setOnClickListener {
       listener.onClick(memory.id)
+    }
+
+    textTitle.setOnLongClickListener {
+      AlertDialog.Builder(itemView.context)
+        .setTitle("Delete Memory")
+        .setMessage("You really wish delete the memory?")
+        .setPositiveButton("Delete") { dialog, wich ->
+          listener.onDelete(memory.id)
+        }
+        .setNeutralButton( "Cancel", null )
+        .show()
+      true
     }
   }
 }
