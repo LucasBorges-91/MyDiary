@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import br.com.borges.lucas.mydiary.databinding.ActivityNewMemoryBinding
+import br.com.borges.lucas.mydiary.service.constants.MemoryConstants
 import br.com.borges.lucas.mydiary.viewmodel.MemoryViewModel
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -26,8 +27,17 @@ class NewMemoryActivity : AppCompatActivity() {
 
     mViewModel = ViewModelProvider(this).get(MemoryViewModel::class.java)
 
+    loadData()
     setListeners()
     observe()
+  }
+
+  private fun loadData() {
+    val bundle = intent.extras
+    if ( bundle != null ) {
+      val id = bundle.getInt( MemoryConstants.MEMORYID )
+      mViewModel.load(id)
+    }
   }
 
   private fun setListeners() {
@@ -57,6 +67,12 @@ class NewMemoryActivity : AppCompatActivity() {
         Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
       }
       finish()
+    })
+
+    mViewModel.memory.observe( this, Observer {
+      binding.etMemoryTitle.setText( it.title )
+      binding.etTextMemory.setText( it.textMemory )
+      binding.tvDate.text = it.date
     })
   }
 

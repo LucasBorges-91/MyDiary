@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.borges.lucas.mydiary.R
 import br.com.borges.lucas.mydiary.databinding.ActivityAllMemoriesBinding
+import br.com.borges.lucas.mydiary.service.constants.MemoryConstants
 import br.com.borges.lucas.mydiary.view.adapter.MemoryAdapter
+import br.com.borges.lucas.mydiary.view.listener.MemoryListener
 import br.com.borges.lucas.mydiary.viewmodel.AllMemoriesViewModel
 
 class AllMemoriesActivity : AppCompatActivity() {
@@ -16,6 +18,7 @@ class AllMemoriesActivity : AppCompatActivity() {
   private lateinit var binding: ActivityAllMemoriesBinding
   private lateinit var allMemoriesViewModel : AllMemoriesViewModel
   private val mAdapter: MemoryAdapter = MemoryAdapter()
+  private lateinit var mListener: MemoryListener
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -28,6 +31,21 @@ class AllMemoriesActivity : AppCompatActivity() {
     val recycler = binding.recyclerAllMemories
     recycler.layoutManager = LinearLayoutManager(applicationContext)
     recycler.adapter = mAdapter
+
+    mListener = object : MemoryListener {
+      override fun onClick(id: Int) {
+        val intent = Intent( applicationContext, NewMemoryActivity::class.java )
+
+        val bundle = Bundle()
+        bundle.putInt( MemoryConstants.MEMORYID, id )
+        intent.putExtras(bundle)
+
+        startActivity(intent)
+      }
+
+    }
+
+    mAdapter.attachListener(mListener)
 
     observer()
 

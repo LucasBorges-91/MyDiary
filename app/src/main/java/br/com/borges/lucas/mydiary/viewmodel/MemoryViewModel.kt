@@ -15,8 +15,15 @@ class MemoryViewModel( application: Application ) : AndroidViewModel( applicatio
   private var mSaveMemory = MutableLiveData<Boolean>()
   val saveMemory: LiveData<Boolean> = mSaveMemory
 
+  private var mMemory = MutableLiveData<MemoryModel>()
+  val memory: LiveData<MemoryModel> = mMemory
+
   fun save( title: String, memory: String, date: String ) {
     val memory = MemoryModel( title = title, textMemory = memory, date = date )
     mSaveMemory.value = mMemoryRepository.save( memory )
+  }
+
+  fun load( id: Int ) {
+    mMemory.value= mMemoryRepository.get(id)
   }
 }
