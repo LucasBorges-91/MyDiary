@@ -124,7 +124,6 @@ class MemoryRepository private constructor( context: Context ) {
       val values = ContentValues()
       values.put( DataBaseConstants.MEMORY.COLUMNS.TITLE, memory.title )
       values.put( DataBaseConstants.MEMORY.COLUMNS.MEMORY, memory.textMemory )
-      values.put( DataBaseConstants.MEMORY.COLUMNS.DATE, memory.date )
 
       val selection = DataBaseConstants.MEMORY.COLUMNS.ID + " = ?"
       val args = arrayOf(memory.id.toString())

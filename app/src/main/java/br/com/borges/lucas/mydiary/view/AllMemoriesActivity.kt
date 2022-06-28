@@ -1,12 +1,13 @@
 package br.com.borges.lucas.mydiary.view
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.borges.lucas.mydiary.R
 import br.com.borges.lucas.mydiary.databinding.ActivityAllMemoriesBinding
 import br.com.borges.lucas.mydiary.service.constants.MemoryConstants
 import br.com.borges.lucas.mydiary.view.adapter.MemoryAdapter
@@ -62,9 +63,15 @@ class AllMemoriesActivity : AppCompatActivity() {
       startActivity( Intent( applicationContext, NewMemoryActivity::class.java ) )
     }
     binding.btLogout.setOnClickListener {
-      val intent = Intent( applicationContext, LoginActivity::class.java )
-      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-      startActivity(intent)
+      val alertDialog = AlertDialog.Builder(applicationContext)
+      alertDialog.setMessage( "You wish close your memories ? " )
+        .setPositiveButton( "Yes", DialogInterface.OnClickListener { _, _ ->
+          val intent = Intent( applicationContext, LoginActivity::class.java )
+          intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+          startActivity(intent)
+        })
+        .setNegativeButton( "No", null )
+      alertDialog.show()
     }
   }
 

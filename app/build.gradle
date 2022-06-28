@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -50,6 +51,7 @@ dependencies {
     implementation "androidx.navigation:navigation-dynamic-features-fragment:2.4.2"
     implementation "androidx.navigation:navigation-compose:1.0.0-alpha10"
     implementation 'androidx.room:room-runtime:2.4.2'
+    kapt 'androidx.room:romm-compiler:2.4.2'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'androidx.room:room-runtime:2.2.5'
