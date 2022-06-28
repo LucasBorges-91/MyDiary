@@ -35,6 +35,8 @@ import br.com.borges.lucas.mydiary.service.model.MemoryModel
 @Database( entities = [MemoryModel::class], version = 1 )
 abstract class MemoryDataBase() : RoomDatabase() {
 
+  abstract fun memoryDAO() : MemoryDAO
+
   companion object {
     private lateinit var INSTANCE: MemoryDataBase
 
@@ -42,7 +44,7 @@ abstract class MemoryDataBase() : RoomDatabase() {
       synchronized(MemoryDataBase::class) {
         if ( !::INSTANCE.isInitialized ) {
           return Room.databaseBuilder( context, MemoryDataBase::class.java, "memorydb")
-            .addMigrations()
+            .addMigrations(MIGRATION_1_2)
             .allowMainThreadQueries()
             .build()
         }

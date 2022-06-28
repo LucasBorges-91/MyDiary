@@ -7,13 +7,13 @@ import br.com.borges.lucas.mydiary.service.model.MemoryModel
 interface MemoryDAO {
 
   @Insert
-  fun save( memory: MemoryModel) : Boolean
+  fun insert(memory: MemoryModel ) : Long
 
   @Update
-  fun update( memory: MemoryModel ): Boolean
+  fun update( memory: MemoryModel ): Int
 
   @Delete
-  fun delete( id: Int ): Boolean
+  fun delete( memory: MemoryModel )
 
   @Query( "SELECT * FROM Memory WHERE id = :id" )
   fun get( id: Int ): MemoryModel

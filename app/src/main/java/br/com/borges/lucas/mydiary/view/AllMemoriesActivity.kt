@@ -63,15 +63,9 @@ class AllMemoriesActivity : AppCompatActivity() {
       startActivity( Intent( applicationContext, NewMemoryActivity::class.java ) )
     }
     binding.btLogout.setOnClickListener {
-      val alertDialog = AlertDialog.Builder(applicationContext)
-      alertDialog.setMessage( "You wish close your memories ? " )
-        .setPositiveButton( "Yes", DialogInterface.OnClickListener { _, _ ->
-          val intent = Intent( applicationContext, LoginActivity::class.java )
-          intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-          startActivity(intent)
-        })
-        .setNegativeButton( "No", null )
-      alertDialog.show()
+      val intent = Intent( applicationContext, LoginActivity::class.java )
+      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+      startActivity(intent)
     }
   }
 

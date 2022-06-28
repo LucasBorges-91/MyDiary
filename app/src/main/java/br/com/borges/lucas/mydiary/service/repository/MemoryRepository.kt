@@ -1,16 +1,13 @@
 package br.com.borges.lucas.mydiary.service.repository
 
-import android.content.ContentValues
 import android.content.Context
-import br.com.borges.lucas.mydiary.service.constants.DataBaseConstants
 import br.com.borges.lucas.mydiary.service.model.MemoryModel
-import java.lang.Exception
 
-class MemoryRepository private constructor( context: Context ) {
+class MemoryRepository( context: Context ) {
 
-  private var mMemoryDataBaseHelper: MemoryDataBaseHelper = MemoryDataBaseHelper( context )
+  private val memoryDataBase = MemoryDataBase.getDataBase( context ).memoryDAO()
 
-  companion object {
+  /*companion object {
     private lateinit var repository: MemoryRepository
 
     fun getInstance( context: Context ) : MemoryRepository {
@@ -19,13 +16,15 @@ class MemoryRepository private constructor( context: Context ) {
       }
       return repository
     }
-  }
+  }*/
 
   fun getAll(): List<MemoryModel> {
-    val list: MutableList<MemoryModel> = ArrayList()
+    return memoryDataBase.getAll()
+
+    /*val list: MutableList<MemoryModel> = ArrayList()
 
     return try {
-      val db = mMemoryDataBaseHelper.readableDatabase
+      val db = memoryDataBase.readableDatabase
 
       val projection = arrayOf(
         DataBaseConstants.MEMORY.COLUMNS.ID,
@@ -59,14 +58,16 @@ class MemoryRepository private constructor( context: Context ) {
       list
     } catch ( e: Exception ) {
       list
-    }
+    }*/
   }
 
-  fun get( id: Int ): MemoryModel? {
-    var memory: MemoryModel? = null
+  fun get( id: Int ): MemoryModel {
+    return memoryDataBase.get( id )
+
+    /*var memory: MemoryModel? = null
 
     return try {
-      val db = mMemoryDataBaseHelper.readableDatabase
+      val db = memoryDataBase.readableDatabase
 
       val projection = arrayOf( DataBaseConstants.MEMORY.COLUMNS.TITLE,
         DataBaseConstants.MEMORY.COLUMNS.MEMORY,
@@ -98,11 +99,13 @@ class MemoryRepository private constructor( context: Context ) {
       memory
     } catch ( e: Exception ) {
       memory
-    }
+    }*/
   }
 
-  fun save( memory: MemoryModel ) : Boolean {
-    return try {
+  fun insert(memory: MemoryModel ) : Boolean {
+    return memoryDataBase.insert( memory ) > 0
+
+    /*return try {
       val db = mMemoryDataBaseHelper.writableDatabase
 
       val values = ContentValues()
@@ -114,12 +117,14 @@ class MemoryRepository private constructor( context: Context ) {
       true
     } catch ( e: Exception ) {
       false
-    }
+    }*/
   }
 
   fun update( memory: MemoryModel ): Boolean {
-    return try {
-      val db = mMemoryDataBaseHelper.writableDatabase
+    return memoryDataBase.update( memory ) > 0
+
+    /*return try {
+      val db = memoryDataBase.writableDatabase
 
       val values = ContentValues()
       values.put( DataBaseConstants.MEMORY.COLUMNS.TITLE, memory.title )
@@ -132,12 +137,15 @@ class MemoryRepository private constructor( context: Context ) {
       true
     } catch ( e: Exception ) {
       false
-    }
+    }*/
   }
 
-  fun delete( id: Int ): Boolean {
-    return try {
-      val db = mMemoryDataBaseHelper.writableDatabase
+  fun delete( id: Int ) {
+    val memory = get( id )
+    return memoryDataBase.delete( memory )
+
+    /*return try {
+      val db = memoryDataBase.writableDatabase
 
       val selection = DataBaseConstants.MEMORY.COLUMNS.ID + " = ?"
       val args = arrayOf( id.toString() )
@@ -146,6 +154,6 @@ class MemoryRepository private constructor( context: Context ) {
       true
     } catch ( e: Exception ) {
       false
-    }
+    }*/
   }
 }

@@ -10,7 +10,7 @@ import br.com.borges.lucas.mydiary.service.repository.MemoryRepository
 
 class AllMemoriesViewModel( application: Application ) : AndroidViewModel( application ) {
 
-  private val mMemoriesRepository = MemoryRepository.getInstance( application.applicationContext )
+  private val mMemoriesRepository = MemoryRepository( application.applicationContext )
 
   private val mMemoryList = MutableLiveData<List<MemoryModel>>()
   val memoryList: LiveData<List<MemoryModel>> = mMemoryList
